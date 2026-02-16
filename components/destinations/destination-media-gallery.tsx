@@ -1,4 +1,5 @@
 import { LazyVideo } from "@/components/media/lazy-video";
+import { withBasePath } from "@/lib/base-path";
 import type { Destination } from "@/lib/types";
 import Image from "next/image";
 
@@ -28,7 +29,7 @@ export function DestinationMediaGallery({ destination }: DestinationMediaGallery
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-1">
           <figure className="relative aspect-square overflow-hidden rounded-xl border border-white/10">
             <Image
-              src={destination.media.squareImage}
+              src={withBasePath(destination.media.squareImage)}
               alt={`Visuel carré - ${destination.name}`}
               fill
               loading="lazy"
@@ -38,7 +39,7 @@ export function DestinationMediaGallery({ destination }: DestinationMediaGallery
           </figure>
           <figure className="relative aspect-[9/16] overflow-hidden rounded-xl border border-white/10 sm:aspect-square lg:aspect-[9/16]">
             <Image
-              src={destination.media.portraitImage}
+              src={withBasePath(destination.media.portraitImage)}
               alt={`Visuel portrait - ${destination.name}`}
               fill
               loading="lazy"

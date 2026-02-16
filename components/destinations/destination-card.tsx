@@ -1,5 +1,6 @@
 "use client";
 
+import { withBasePath } from "@/lib/base-path";
 import type { Destination } from "@/lib/types";
 import { motion } from "framer-motion";
 import Image from "next/image";
@@ -18,7 +19,7 @@ export function DestinationCard({ destination }: DestinationCardProps) {
     >
       <div className="relative aspect-[16/10] overflow-hidden rounded-xl border border-white/15">
         <Image
-          src={destination.media.heroImage}
+          src={withBasePath(destination.media.heroImage)}
           alt={`Visuel principal - ${destination.name}`}
           fill
           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"

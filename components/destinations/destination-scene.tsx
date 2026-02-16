@@ -1,3 +1,4 @@
+import { withBasePath } from "@/lib/base-path";
 import type { Destination } from "@/lib/types";
 import Image from "next/image";
 
@@ -37,7 +38,7 @@ export function DestinationScene({ destination }: DestinationSceneProps) {
       className={`relative mt-8 overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-br p-7 md:p-8 ${scene.palette}`}
     >
       <Image
-        src={destination.media.heroImage}
+        src={withBasePath(destination.media.heroImage)}
         alt={`Scene hero - ${destination.name}`}
         fill
         sizes="(max-width: 768px) 100vw, 1200px"
