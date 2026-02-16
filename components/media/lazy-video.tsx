@@ -1,5 +1,6 @@
 "use client";
 
+import { withBasePath } from "@/lib/base-path";
 import { useReducedMotion } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 
@@ -48,7 +49,7 @@ export function LazyVideo({
     <div ref={containerRef} className={className}>
       <video
         className="h-full w-full object-cover"
-        poster={poster}
+        poster={withBasePath(poster)}
         playsInline
         muted
         loop={loop}
@@ -57,7 +58,7 @@ export function LazyVideo({
         preload={isNearViewport ? "metadata" : "none"}
         aria-label={title}
       >
-        {isNearViewport ? <source src={src} type="video/mp4" /> : null}
+        {isNearViewport ? <source src={withBasePath(src)} type="video/mp4" /> : null}
       </video>
     </div>
   );

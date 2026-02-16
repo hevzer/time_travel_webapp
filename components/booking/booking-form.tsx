@@ -1,7 +1,7 @@
 "use client";
 
 import { destinations } from "@/data/destinations";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { FormEvent, useMemo, useState } from "react";
 
 type FormState = {
@@ -24,10 +24,18 @@ type BookingFormProps = {
 
 export function BookingForm({ initialDestination = "paris-1889" }: BookingFormProps) {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const initialDestinationFromQuery = searchParams.get("destination");
+  const selectedInitialDestination =
+    initialDestinationFromQuery &&
+    destinations.some((destination) => destination.slug === initialDestinationFromQuery)
+      ? initialDestinationFromQuery
+      : initialDestination;
+
   const [step, setStep] = useState(1);
   const [error, setError] = useState<string | null>(null);
   const [state, setState] = useState<FormState>({
-    destination: initialDestination,
+    destination: selectedInitialDestination,
     departureDate: "",
     durationDays: 3,
     travelers: 1,

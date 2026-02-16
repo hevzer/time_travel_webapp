@@ -1,5 +1,6 @@
 "use client";
 
+import { createChatReply } from "@/lib/chat";
 import { FormEvent, useMemo, useState } from "react";
 import Link from "next/link";
 
@@ -32,23 +33,14 @@ export function ChatWidget() {
     [messages],
   );
 
-  const sendPrompt = async (value: string) => {
+  const sendPrompt = (value: string) => {
     if (!value.trim()) return;
     setMessages((state) => [...state, { role: "user", text: value }]);
     setLoading(true);
     setInput("");
 
     try {
-      const response = await fetch("/api/chat", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ message: value }),
-      });
-      const payload = (await response.json()) as {
-        answer: string;
-        recommendationSlug?: string;
-        suggestions?: string[];
-      };
+      const payload = createChatReply(value);
 
       setMessages((state) => [
         ...state,
@@ -72,9 +64,9 @@ export function ChatWidget() {
     }
   };
 
-  const onSubmit = async (event: FormEvent<HTMLFormElement>) => {
+  const onSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    await sendPrompt(input);
+    sendPrompt(input);
   };
 
   return (
@@ -115,7 +107,7 @@ export function ChatWidget() {
                       <button
                         key={`${index}-${suggestion}`}
                         type="button"
-                        onClick={() => void sendPrompt(suggestion)}
+                        onClick={() => sendPrompt(suggestion)}
                         className="rounded-full border border-white/20 px-2.5 py-1 text-[11px] text-white/80"
                       >
                         {suggestion}
@@ -144,7 +136,7 @@ export function ChatWidget() {
               <button
                 type="button"
                 key={prompt}
-                onClick={() => void sendPrompt(prompt)}
+                onClick={() => sendPrompt(prompt)}
                 className="rounded-full border border-white/20 px-3 py-1 text-xs text-muted transition hover:text-white"
               >
                 {prompt}

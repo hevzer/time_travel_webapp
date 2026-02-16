@@ -14,9 +14,7 @@ Practical rules for agentic coding assistants operating in this repository.
 
 ## 2) Repository Map
 
-- `app/` -> routes, layout, API handlers.
-- `app/api/chat/route.ts` -> mock chat API endpoint.
-- `app/api/recommendation/route.ts` -> quiz recommendation API endpoint.
+- `app/` -> routes, layout, and page entry points.
 - `components/` -> UI and feature components.
 - `components/home/recommendation-quiz.tsx` -> automation quiz UI.
 - `data/` -> static datasets (`destinations.ts`, `faq.ts`).
@@ -136,7 +134,7 @@ If these are added later, they become repository policy and must be followed.
 
 ## 13) AI Transparency and Asset Handling
 
-- The app currently uses mock/deterministic recommendation logic at runtime.
+- The app currently uses client-side mock/deterministic recommendation logic at runtime.
 - Keep AI-related claims accurate (avoid claiming real LLM calls when mocked).
 - Media in `public/` comes from project assets; do not rename/move casually.
 - If adding assets, follow existing folder organization and naming style.
@@ -154,6 +152,6 @@ Before finishing any change:
 Suggested first tests to add:
 
 - Unit: `lib/quiz-recommendation.ts` scoring and tie-break behavior.
-- API: `app/api/recommendation/route.ts` invalid/valid payload paths.
+- API (if reintroduced later): invalid/valid payload paths and fallback behavior.
 - Component: quiz step progression and result rendering.
 - Smoke: destination pages render media URLs and text fallback correctly.

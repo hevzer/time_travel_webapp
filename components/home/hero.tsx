@@ -1,5 +1,6 @@
 "use client";
 
+import { withBasePath } from "@/lib/base-path";
 import { motion } from "framer-motion";
 import Link from "next/link";
 
@@ -13,10 +14,10 @@ export function Hero() {
         loop
         playsInline
         preload="metadata"
-        poster="/Paris_1889/Paris_1889_16_9.png"
+        poster={withBasePath("/Paris_1889/Paris_1889_16_9.png")}
         aria-hidden
       >
-        <source src="/Paris_1889/Paris_1889_Video.mp4" type="video/mp4" />
+        <source src={withBasePath("/Paris_1889/Paris_1889_Video.mp4")} type="video/mp4" />
       </video>
       <div className="absolute inset-0 bg-[linear-gradient(120deg,rgba(6,13,26,0.9),rgba(8,18,32,0.55),rgba(14,33,52,0.9))]" />
       <motion.div

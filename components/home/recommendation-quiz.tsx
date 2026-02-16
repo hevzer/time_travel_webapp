@@ -62,26 +62,7 @@ export function RecommendationQuiz() {
     setError(null);
 
     try {
-      const response = await fetch("/api/recommendation", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ answers }),
-      });
-
-      const payload = (await response.json()) as
-        | QuizRecommendation
-        | {
-            message?: string;
-          };
-
-      if (!response.ok || !("slug" in payload)) {
-        const errorMessage =
-          "message" in payload && payload.message
-            ? payload.message
-            : "Erreur de recommandation";
-        throw new Error(errorMessage);
-      }
-
+      const payload = getQuizRecommendation(answers);
       setResult(payload);
     } catch (submitError) {
       setResult(null);

@@ -1,13 +1,8 @@
 import { BookingForm } from "@/components/booking/booking-form";
 import { SectionTitle } from "@/components/ui/section-title";
+import { Suspense } from "react";
 
-type ReservationPageProps = {
-  searchParams: Promise<{ destination?: string }>;
-};
-
-export default async function ReservationPage({ searchParams }: ReservationPageProps) {
-  const { destination } = await searchParams;
-
+export default function ReservationPage() {
   return (
     <section className="mx-auto max-w-4xl px-5 py-16 md:px-8">
       <SectionTitle
@@ -29,7 +24,9 @@ export default async function ReservationPage({ searchParams }: ReservationPageP
           Validation anti-paradoxe
         </div>
       </div>
-      <BookingForm initialDestination={destination} />
+      <Suspense fallback={<div className="mt-8 text-sm text-muted">Chargement du formulaire...</div>}>
+        <BookingForm />
+      </Suspense>
     </section>
   );
 }
