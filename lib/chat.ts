@@ -41,15 +41,15 @@ export const createChatReply = (
   ) {
     return {
       answer:
-        "Nos guides certifiés appliquent un protocole de non-interférence et un retour ancré en temps réel. Le Crétacé exige un briefing renforcé avant départ.",
-      suggestions: ["Rappelle les règles", "Destination la plus sûre"],
+        "Nos guides certifiés appliquent un protocole de non-interférence et un retour ancré en temps réel. Le Crétacé prévoit un briefing renforcé avant départ.",
+      suggestions: ["Rappelle les règles", "Comparer les destinations"],
     };
   }
 
   if (text.includes("paris") || text.includes("1889")) {
     const destination = destinationBySlug("paris-1889");
     return {
-      answer: `${destination?.name} est idéale pour une première immersion : art, innovation et risque maîtrisé.`,
+      answer: `${destination?.name} est idéale pour une première immersion : art, innovation et ambiance Belle Époque.`,
       suggestions: ["Voir le programme Paris", "Réserver Paris 1889"],
       recommendationSlug: "paris-1889",
     };

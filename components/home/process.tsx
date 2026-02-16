@@ -6,7 +6,7 @@ const steps = [
   {
     title: "Choisissez votre époque",
     description:
-      "Comparez les ambiances, le niveau de risque et les itinéraires proposés pour Paris 1889, Crétacé et Florence 1504.",
+      "Comparez les ambiances et les itinéraires proposés pour Paris 1889, Crétacé et Florence 1504.",
   },
   {
     title: "Personnalisez le voyage",

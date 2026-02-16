@@ -17,7 +17,7 @@ export const globalFaq = [
   {
     question: "Que se passe-t-il en cas de paradoxe ?",
     answer:
-      "Nos règles de non-interférence limitent ce risque. Si une anomalie est détectée, votre guide applique un protocole de stabilisation immédiat.",
+      "Nos règles de non-interférence limitent ce scénario. Si une anomalie est détectée, votre guide applique un protocole de stabilisation immédiat.",
   },
   {
     question: "Puis-je voyager en groupe ?",

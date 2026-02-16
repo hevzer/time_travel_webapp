@@ -8,21 +8,21 @@ const sceneContent = {
     caption:
       "Une soirée privée au pied de la tour Eiffel, entre pavillons électriques et orchestres Belle Époque.",
     palette: "from-amber-300/30 via-orange-400/20 to-cyan-300/20",
-    badges: ["Guide historien", "Accès privé", "Risque modéré"],
+    badges: ["Guide historien", "Accès privé", "Belle Époque"],
   },
   cretace: {
     title: "Fenêtre paléontologique",
     caption:
       "Observation en dôme camouflé, survol de forêts primitives et protocole de sécurité renforcé.",
     palette: "from-emerald-300/30 via-lime-300/20 to-sky-400/25",
-    badges: ["Capsule Anchor+", "Mode silence", "Risque élevé"],
+    badges: ["Capsule Anchor+", "Mode silence", "Expédition intense"],
   },
   "florence-1504": {
     title: "Atelier renaissance",
     caption:
       "Parcours artistique au cœur de Florence, entre ateliers, palais et rencontres culturelles.",
     palette: "from-rose-300/25 via-amber-300/25 to-blue-300/20",
-    badges: ["Immersion culturelle", "Rythme flexible", "Risque faible"],
+    badges: ["Immersion culturelle", "Rythme flexible", "Élégance italienne"],
   },
 } as const;
 

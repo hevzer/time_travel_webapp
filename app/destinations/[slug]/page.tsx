@@ -28,9 +28,6 @@ export default async function DestinationPage({ params }: DestinationPageProps) 
         <p className="mt-4 max-w-3xl text-base text-white/85">{destination.description}</p>
         <div className="mt-6 flex flex-wrap gap-3 text-xs text-white/90">
           <span className="rounded-full border border-white/35 px-3 py-1">
-            Risque {destination.riskLevel}
-          </span>
-          <span className="rounded-full border border-white/35 px-3 py-1">
             Fenêtre idéale : {destination.bestWindow}
           </span>
           <span className="rounded-full border border-white/35 px-3 py-1">

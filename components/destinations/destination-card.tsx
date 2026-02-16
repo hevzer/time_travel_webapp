@@ -29,9 +29,6 @@ export function DestinationCard({ destination }: DestinationCardProps) {
         <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(4,10,19,0.15),rgba(4,10,19,0.78))]" />
         <div className="absolute bottom-3 left-3 flex flex-wrap items-center gap-2">
           <p className="text-xs uppercase tracking-[0.2em] text-brand-soft">{destination.period}</p>
-          <p className="rounded-full border border-white/35 bg-black/35 px-2.5 py-1 text-[11px] text-white">
-            Risque {destination.riskLevel}
-          </p>
         </div>
       </div>
 

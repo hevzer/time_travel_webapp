@@ -11,7 +11,6 @@ export const destinations: Destination[] = [
       "Montez au premier sommet de la tour Eiffel et vivez le Paris électrique des grands boulevards.",
     description:
       "Paris 1889 combine innovation, art et élégance. Votre guide temporel vous ouvre les portes des pavillons de l'Exposition universelle, des salons littéraires et des ateliers de mode.",
-    riskLevel: "Modéré",
     budgetLabel: "à partir de 3 200 EUR",
     bestWindow: "Avril à Septembre",
     durationOptions: [3, 7, 14],
@@ -60,7 +59,6 @@ export const destinations: Destination[] = [
       "Observez les géants du Crétacé depuis des capsules camouflées et survolez des forêts primitives.",
     description:
       "Le Crétacé est réservé aux voyageurs en recherche d'adrénaline. Nos protocoles Anchor+ maintiennent une bulle de sécurité active face aux prédateurs et aux variations climatiques.",
-    riskLevel: "Élevé",
     budgetLabel: "à partir de 6 900 EUR",
     bestWindow: "Cycles climatiques stables (sélection automatique)",
     durationOptions: [2, 3, 7],
@@ -81,9 +79,9 @@ export const destinations: Destination[] = [
     ],
     faq: [
       {
-        question: "Y a-t-il un risque avec les dinosaures ?",
+        question: "Comment se passe l'observation des dinosaures ?",
         answer:
-          "Le risque est contrôlé mais non nul. Les capsules Anchor+ sont conçues pour une non-détection active.",
+          "L'observation se fait depuis des capsules Anchor+ conçues pour une non-détection active.",
       },
       {
         question: "Cette destination est-elle adaptée aux enfants ?",
@@ -110,7 +108,6 @@ export const destinations: Destination[] = [
       "Assistez à l'installation du David de Michel-Ange et plongez dans les ateliers de maîtres florentins.",
     description:
       "Florence 1504 offre une immersion culturelle exceptionnelle. Entre palais, ateliers et places publiques, vous vivez le basculement d'une ville qui redéfinit l'art occidental.",
-    riskLevel: "Faible",
     budgetLabel: "à partir de 2 800 EUR",
     bestWindow: "Mars à Juin",
     durationOptions: [3, 7, 14],

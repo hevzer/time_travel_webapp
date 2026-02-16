@@ -1,5 +1,3 @@
-export type RiskLevel = "Faible" | "Modéré" | "Élevé";
-
 export type Destination = {
   id: string;
   slug: string;
@@ -8,7 +6,6 @@ export type Destination = {
   subtitle: string;
   teaser: string;
   description: string;
-  riskLevel: RiskLevel;
   budgetLabel: string;
   bestWindow: string;
   durationOptions: number[];

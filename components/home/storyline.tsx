@@ -5,7 +5,7 @@ const chapters = [
     phase: "Pré-brief",
     title: "Simulation et calibration",
     description:
-      "Nous analysons vos préférences, vos contraintes et votre tolérance au risque avant de verrouiller la fenêtre temporelle.",
+      "Nous analysons vos préférences et vos contraintes de voyage avant de verrouiller la fenêtre temporelle.",
   },
   {
     phase: "Transit",
