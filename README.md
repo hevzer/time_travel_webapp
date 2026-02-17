@@ -123,7 +123,3 @@ et définir les secrets suivants:
 
 - Images et vidéos de destinations: assets produits dans le premier projet TimeTravel Agency
   puis stockés dans `public/Paris_1889`, `public/Cretace`, `public/Florence`
-
-## Licence
-
-Projet pédagogique (M1/M2 Digital & IA).
