@@ -13,7 +13,7 @@ et de simuler une réservation complète.
 - TypeScript (mode strict)
 - Tailwind CSS v4
 - Framer Motion
-- Bun 1.3.9 (installation et scripts)
+- Bun (latest) (installation et scripts)
 
 ## Features implémentées
 
@@ -39,7 +39,7 @@ et de simuler une réservation complète.
 
 ### Prérequis
 
-- Bun `>= 1.3.9`
+- Bun (latest)
 
 ### Lancer en local
 
@@ -77,23 +77,29 @@ Sans clé Mistral, l'app bascule automatiquement sur le moteur de réponses loca
 
 ## Déploiement Cloudflare Workers (automatique)
 
-Le déploiement est assuré via GitHub Actions.
+### Option A: Cloudflare Workers Builds (recommandé)
 
-- Workflow: `.github/workflows/deploy-cloudflare.yml`
-- Runtime cible: Cloudflare Workers (OpenNext)
+Connecter le repo GitHub dans Cloudflare Workers Builds. Paramètres conseillés:
 
-Secrets GitHub requis:
-
-1. `CLOUDFLARE_API_TOKEN`
-2. `CLOUDFLARE_ACCOUNT_ID`
+- **Install command**: `bun install --frozen-lockfile`
+- **Build command**: `bun run lint && bunx opennextjs-cloudflare build`
+- **Deploy command**: `bunx opennextjs-cloudflare deploy -- --keep-vars`
 
 Secrets Cloudflare Worker requis:
 
-- `MISTRAL_API_KEY` (à définir dans le dashboard Cloudflare ou via `wrangler secret put`)
+- `MISTRAL_API_KEY` (dashboard Cloudflare ou `wrangler secret put`)
+- `MISTRAL_MODEL` (optionnel, défaut: `mistral-small-latest`)
 
-Note: le déploiement utilise `--keep-vars` pour conserver les variables/secret déjà configurés dans le dashboard Cloudflare.
+Note: `--keep-vars` préserve les variables/secret déjà configurés dans le dashboard Cloudflare.
 
-Chaque push sur `main` ou `master` lance automatiquement lint, build et déploiement.
+### Option B: GitHub Actions
+
+CI-only est disponible via `/.github/workflows/ci.yml` (lint + build uniquement).
+Pour réactiver un déploiement GitHub Actions, il faut créer un workflow dédié
+et définir les secrets suivants:
+
+1. `CLOUDFLARE_API_TOKEN`
+2. `CLOUDFLARE_ACCOUNT_ID`
 
 ## Crédits
 

@@ -1,157 +1,147 @@
 # AGENTS.md
 
-Practical rules for agentic coding assistants operating in this repository.
+Practical operating guide for agentic coding assistants in this repository.
 
-## 1) Scope and Stack
-
-- Project: `TimeTravel Agency` interactive web app.
-- Runtime/package manager: **Bun** (`bun@1.3.9`).
-- Framework: Next.js App Router (`app/` directory).
-- Language: TypeScript (`strict` enabled).
-- UI: React + Tailwind CSS v4 + Framer Motion.
-- Content language: French-first; accented copy is expected.
-- Current tests: no first-party test suite is committed yet.
+## 1) Project Snapshot
+- Product: `TimeTravel Agency` immersive web app.
+- Runtime + package manager: **Bun** (`bun@latest`).
+- Framework: Next.js 16 App Router (`app/`).
+- Language: TypeScript (`strict: true`).
+- UI stack: React 19 + Tailwind CSS v4 + Framer Motion.
+- Hosting target: Cloudflare Workers via OpenNext.
+- UI language: French-first (accents expected in user-facing copy).
 
 ## 2) Repository Map
-
-- `app/` -> routes, layout, and page entry points.
-- `components/` -> UI and feature components.
-- `components/home/recommendation-quiz.tsx` -> automation quiz UI.
-- `data/` -> static datasets (`destinations.ts`, `faq.ts`).
+- `app/` -> routes, layouts, and API handlers.
+- `app/api/chat/route.ts` -> chatbot server endpoint (Mistral + fallback).
+- `components/` -> UI blocks (home, booking, chat, layout).
+- `components/chat/chat-widget.tsx` -> floating chatbot widget.
 - `lib/` -> business logic (`chat`, `recommendation`, `quiz-recommendation`).
-- `public/` -> static media assets (images/videos).
-- `eslint.config.mjs` -> lint policy (Next + TS).
-- `tsconfig.json` -> strict config and alias `@/*`.
+- `data/` -> static content (`destinations.ts`, `faq.ts`).
+- `public/` -> static media assets.
+- `open-next.config.ts` + `wrangler.jsonc` -> Cloudflare/OpenNext integration.
+- `.github/workflows/ci.yml` -> CI-only (lint + build).
 
-## 3) Core Commands (Bun)
-
+## 3) Build, Lint, Dev, Deploy Commands
 - Install dependencies: `bun install`
-- Run dev server: `bun run dev`
-- Build production: `bun run build`
-- Start production server: `bun run start`
-- Lint entire repo: `bun run lint`
-- Lint one file: `bunx eslint app/page.tsx`
+- Start local dev server: `bun run dev`
+- Lint full repo: `bun run lint`
+- Lint one file: `bunx eslint components/chat/chat-widget.tsx`
+- Build app (Next production build): `bun run build`
+- Start production server locally: `bun run start`
+- Preview Cloudflare runtime locally: `bun run preview`
+- Deploy to Cloudflare Workers: `bun run deploy`
+- Generate Cloudflare env types: `bun run cf-typegen`
+- `bun run build` is the main type-safety gate.
+- For Cloudflare behavior, `bun run preview` is the closest runtime check.
 
-Notes:
-
-- `bun run build` is the main safety check (includes type checks in Next build).
-- Always run lint + build before considering work done.
-
-## 4) Tests (including single-test execution)
-
-Current state:
-
-- There are no app-level `*.test.*` or `*.spec.*` files yet.
-- No Jest/Vitest/Playwright config is currently present.
-
-When adding tests, use Bun test runner by default:
-
+## 4) Test Commands (including single test)
+- Current state: no committed app-level `*.test.*` / `*.spec.*` files.
+- Current state: no Jest/Vitest/Playwright config detected.
+- When tests are added, use Bun test runner by default.
 - Run all tests: `bun test`
 - Run one file: `bun test path/to/file.test.ts`
-- Run one named test: `bun test -t "name fragment"`
-
-Recommended first test target:
-
-- `lib/quiz-recommendation.ts` (pure deterministic scoring logic).
+- Run one test by name: `bun test -t "name fragment"`
+- Optional watch mode: `bun test --watch`
+- Suggested first targets: `lib/quiz-recommendation.ts`, `lib/chat.ts`, `app/api/chat/route.ts`.
 
 ## 5) Cursor/Copilot Rules Status
-
-Repository scan found **no** extra AI rule files:
-
-- `.cursor/rules/`
-- `.cursorrules`
-- `.github/copilot-instructions.md`
-
-If these are added later, they become repository policy and must be followed.
+- Repository scan found no additional AI policy files:
+  - `.cursor/rules/` (not present)
+  - `.cursorrules` (not present)
+  - `.github/copilot-instructions.md` (not present)
+- If these files appear later, treat them as repository policy.
 
 ## 6) Formatting Rules
-
 - Use 2-space indentation.
 - Use semicolons consistently.
 - Use double quotes for strings.
-- Keep code style consistent with existing files; avoid style-only churn.
-- Use concise comments only for non-obvious logic.
-- Keep non-UI identifiers mostly ASCII; keep accented French in user-facing copy.
+- Avoid style-only churn in unrelated files.
+- Add comments only for non-obvious logic.
+- Keep identifiers mostly ASCII; keep accented French in UI copy.
 
-## 7) Import and Module Rules
-
-- Prefer absolute internal imports with alias `@/...`.
-- Typical import order:
-  1. external/framework imports,
-  2. internal imports,
-  3. type imports (inline `type` is fine).
+## 7) Imports and Module Structure
+- Prefer absolute imports via alias `@/*`.
+- Import order convention:
+  1) external/framework imports,
+  2) internal imports,
+  3) type imports (`import type` / inline `type`).
 - Remove unused imports immediately.
-- Keep modules focused; extract reusable logic to `lib/`.
+- Keep route files thin; move reusable logic to `lib/`.
+- Keep modules focused; avoid dumping unrelated helpers.
 
-## 8) Types and Naming Conventions
+## 8) TypeScript and Validation Standards
+- Do not relax TypeScript strictness.
+- Avoid `any`; prefer explicit unions/literals/interfaces.
+- Validate unknown input at boundaries (API payloads, query params).
+- Use narrowing helpers before consuming untyped data.
+- Keep shared domain shapes in `lib/types.ts` when reused.
 
-- Do not weaken TypeScript strictness.
-- Avoid `any`; use unions and explicit interfaces/types.
-- Validate unknown input at API boundaries before using it.
-- Centralize shared domain shapes in `lib/types.ts` when broadly reused.
-- Component exports: PascalCase.
-- Component filenames: kebab-case in `components/`.
-- Utility/library filenames: kebab-case.
+## 9) Naming Conventions
+- React component names: PascalCase.
+- Component file names: kebab-case (`chat-widget.tsx`).
+- Utility/lib file names: kebab-case.
 - Variables/functions: camelCase.
 - Constants: UPPER_SNAKE_CASE only when truly constant/global.
 
-## 9) Next.js and React Conventions
-
+## 10) Next.js and React Conventions
 - Default to Server Components.
-- Add `"use client"` only when hooks/browser APIs/events are required.
-- Keep route files (`app/**/page.tsx`) compositional.
-- Move business rules and scoring logic into `lib/`.
-- Precompute heavy derived values outside JSX return blocks.
-- Use small, composable components with typed props.
+- Add `"use client"` only for hooks/events/browser APIs.
+- Keep `app/**/page.tsx` compositional and lightweight.
+- Precompute derived values outside JSX return when practical.
+- Use typed props for reusable components.
+- Use `next/link` and `next/image` where appropriate.
 
-## 10) Error Handling and API Contracts
+## 11) API and Error-Handling Rules
+- Return structured JSON with explicit HTTP status codes.
+- Keep API response shapes stable where possible.
+- Use French user-facing messages for recoverable errors.
+- Do not expose stack traces/secrets in API responses.
+- Log concise server diagnostics for failed external calls.
+- Provide fallback behavior for degraded external services.
 
-- Return structured JSON with explicit HTTP statuses.
-- Validate payload shape before processing.
-- Do not expose stack traces/internal details in responses.
-- Use user-facing French error messages for UI-related failures.
-- Provide actionable fallback messaging in client components.
-- Keep API response shape stable when possible; document breaking changes.
+## 12) Chatbot-Specific Guidance
+- Main endpoint: `app/api/chat/route.ts`.
+- Runtime model keys: `MISTRAL_API_KEY`, `MISTRAL_MODEL`.
+- Preserve deterministic fallback via `createChatReply`.
+- Do not claim live AI responses when fallback is active.
+- Keep persona aligned with luxury time-travel concierge tone.
+- Keep invented pricing coherent with destination baselines.
 
-## 11) Styling, Accessibility, and Performance
+## 13) Styling, Accessibility, Performance
+- Reuse design tokens from `app/globals.css`.
+- Preserve established dark + gold visual language.
+- Keep responsive behavior robust on mobile and desktop.
+- Respect reduced motion preferences.
+- Provide meaningful alt text for media.
+- Lazy-load non-critical media; keep video preload conservative.
 
-- Use Tailwind utilities and existing design language.
-- Reuse tokens/variables defined in `app/globals.css`.
-- Preserve immersive visual style (gradients, overlays, motion).
-- Keep responsive behavior solid on mobile and desktop.
-- Respect reduced-motion preferences.
-- Use `next/image` for images where practical.
-- Always provide meaningful alt text.
-- Lazy-load non-critical media.
-- Keep video preload conservative (`none`/`metadata`) unless critical hero media.
+## 14) Localization and Content Integrity
+- UI copy is French-first.
+- Preserve accents (`Réservation`, `Sécurité`, `Crétacé`, etc.).
+- Avoid accidental English labels in user-facing UI.
+- Keep destination references and lore internally consistent.
 
-## 12) Localization Rules
+## 15) Cloudflare and CI/CD Notes
+- Default deploy path: Cloudflare Workers Builds (Git integration).
+- Build command used in Cloudflare: `bun run lint && bunx opennextjs-cloudflare build`.
+- Deploy command used in Cloudflare: `bunx opennextjs-cloudflare deploy -- --keep-vars`.
+- CI-only workflow exists at `/.github/workflows/ci.yml` (lint + build).
+- Worker runtime secret must include `MISTRAL_API_KEY`.
+- `.open-next/` is generated output and must remain ignored.
 
-- UI is French-first.
-- Keep accents in visible text (example: `Réservation`, `Sécurité`, `Récapitulatif`, `Étape`, `Crétacé`).
-- Avoid accidental regression to unaccented labels.
-- Do not mix English labels in user UI unless branding requires it.
+## 16) Git and Workspace Hygiene
+- You may work in a dirty tree; never revert unrelated user changes.
+- Do not modify generated folders manually (`.next/`, `.open-next/`).
+- Do not commit secrets (`.env*`, credentials, tokens).
+- Keep edits scoped to the request; avoid opportunistic refactors.
+- Prefer small, reviewable diffs in touched files.
 
-## 13) AI Transparency and Asset Handling
-
-- The app currently uses client-side mock/deterministic recommendation logic at runtime.
-- Keep AI-related claims accurate (avoid claiming real LLM calls when mocked).
-- Media in `public/` comes from project assets; do not rename/move casually.
-- If adding assets, follow existing folder organization and naming style.
-
-## 14) Agent Completion Checklist
-
-Before finishing any change:
-
+## 17) Agent Completion Checklist
+Before finishing a change:
 1. Run `bun run lint`.
 2. Run `bun run build`.
-3. Run tests for changed scope (if tests exist).
-4. Verify no unrelated file modifications.
-5. Summarize behavior changes and any follow-up work.
-
-Suggested first tests to add:
-
-- Unit: `lib/quiz-recommendation.ts` scoring and tie-break behavior.
-- API (if reintroduced later): invalid/valid payload paths and fallback behavior.
-- Component: quiz step progression and result rendering.
-- Smoke: destination pages render media URLs and text fallback correctly.
+3. Run targeted tests for changed scope (`bun test ...`) when present.
+4. For Cloudflare-impacting changes, run `bun run preview` when possible.
+5. Confirm no unintended file changes or generated artifacts are staged.
+6. Summarize behavior changes, validation steps, and follow-up actions.
