@@ -73,7 +73,7 @@ Sans clé Mistral, l'app bascule automatiquement sur le moteur de réponses loca
 - `bun run start` : démarrage en mode production
 - `bun run lint` : lint global
 - `bun run preview` : build + prévisualisation Cloudflare Workers locale
-- `bun run deploy` : build + déploiement Cloudflare Workers
+- `bun run deploy` : build + déploiement Cloudflare Workers (`--keep-vars`)
 
 ## Déploiement Cloudflare Workers (automatique)
 
@@ -90,6 +90,8 @@ Secrets GitHub requis:
 Secrets Cloudflare Worker requis:
 
 - `MISTRAL_API_KEY` (à définir dans le dashboard Cloudflare ou via `wrangler secret put`)
+
+Note: le déploiement utilise `--keep-vars` pour conserver les variables/secret déjà configurés dans le dashboard Cloudflare.
 
 Chaque push sur `main` ou `master` lance automatiquement lint, build et déploiement.
 

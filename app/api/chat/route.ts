@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { getCloudflareContext } from "@opennextjs/cloudflare";
 import { destinationBySlug } from "@/data/destinations";
 import { createChatReply } from "@/lib/chat";
 import { buildChatSystemPrompt } from "@/lib/chat-system-prompt";
@@ -8,7 +9,24 @@ const MISTRAL_ENDPOINT = "https://api.mistral.ai/v1/chat/completions";
 const MAX_MESSAGE_LENGTH = 1200;
 const MAX_HISTORY_MESSAGES = 8;
 
-export const runtime = "edge";
+const readRuntimeEnv = async (key: string) => {
+  const localValue = process.env[key];
+  if (typeof localValue === "string" && localValue.trim()) {
+    return localValue;
+  }
+
+  try {
+    const context = await getCloudflareContext({ async: true });
+    const runtimeValue = (context.env as Record<string, unknown>)[key];
+    if (typeof runtimeValue === "string" && runtimeValue.trim()) {
+      return runtimeValue;
+    }
+  } catch {
+    return undefined;
+  }
+
+  return undefined;
+};
 
 type RequestHistoryMessage = {
   role: "user" | "assistant";
@@ -110,12 +128,12 @@ export async function POST(request: Request) {
   const history = parseHistory(payload.history);
   const fallbackReply = createChatReply(message, contextSlug);
 
-  const apiKey = process.env.MISTRAL_API_KEY;
+  const apiKey = await readRuntimeEnv("MISTRAL_API_KEY");
   if (!apiKey) {
     return NextResponse.json(fallbackReply);
   }
 
-  const model = process.env.MISTRAL_MODEL ?? "mistral-small-latest";
+  const model = (await readRuntimeEnv("MISTRAL_MODEL")) ?? "mistral-small-latest";
   const contextDestination = contextSlug ? destinationBySlug(contextSlug)?.name : undefined;
 
   try {
@@ -155,6 +173,8 @@ export async function POST(request: Request) {
     });
 
     if (!response.ok) {
+      const mistralError = await response.text();
+      console.error("Mistral API error", response.status, mistralError.slice(0, 300));
       return NextResponse.json(fallbackReply);
     }
 
@@ -165,7 +185,8 @@ export async function POST(request: Request) {
     }
 
     return NextResponse.json(toChatReply(fallbackReply, aiAnswer));
-  } catch {
+  } catch (error) {
+    console.error("Mistral API request failed", error);
     return NextResponse.json(fallbackReply);
   }
 }
