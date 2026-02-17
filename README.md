@@ -22,17 +22,17 @@ et de simuler une réservation complète.
 - Pages détail pour chaque destination
 - Intégration des médias du projet (images hero + vidéos)
 - Chargement optimisé des médias (lazy loading images/vidéos)
-- Chatbot conversationnel en mode mock (FAQ + guidance)
+- Chatbot IA (Mistral API) avec fallback local déterministe
 - Quiz intelligent de 4 questions avec recommandation personnalisée
 - Formulaire de réservation multi-étapes avec validation
 - Page de confirmation de dossier
-- Déploiement statique compatible GitHub Pages
+- Déploiement dynamique Cloudflare Workers (CI GitHub Actions)
 
 ## Outils IA utilisés (transparence)
 
 - Assistance de développement: OpenCode (`gpt-5.3-codex`)
 - Design de référence: MCP Stitch (récupération/alignement visuel)
-- Recommandation utilisateur: moteur local déterministe (pas d'appel LLM externe en runtime)
+- Recommandation utilisateur: moteur local déterministe + intégration Mistral API pour le chatbot
 - Visuels/vidéos: médias générés lors du premier projet TimeTravel Agency puis intégrés dans `public/`
 
 ## Instructions d'installation
@@ -57,31 +57,47 @@ bun run lint
 bun run build
 ```
 
+### Variables d'environnement
+
+Copier `.env.example` vers `.env.local` et définir:
+
+- `MISTRAL_API_KEY` (obligatoire pour réponses IA distantes)
+- `MISTRAL_MODEL` (optionnel, défaut: `mistral-small-latest`)
+
+Sans clé Mistral, l'app bascule automatiquement sur le moteur de réponses local.
+
 ## Scripts disponibles
 
 - `bun run dev` : serveur de développement
-- `bun run build` : build de production (export statique)
+- `bun run build` : build de production Next.js
 - `bun run start` : démarrage en mode production
 - `bun run lint` : lint global
+- `bun run preview` : build + prévisualisation Cloudflare Workers locale
+- `bun run deploy` : build + déploiement Cloudflare Workers
 
-## Déploiement GitHub Pages
+## Déploiement Cloudflare Workers (automatique)
 
-Le projet est configuré pour GitHub Pages via GitHub Actions.
+Le déploiement est assuré via GitHub Actions.
 
-- Workflow: `.github/workflows/deploy-pages.yml`
-- Config Next: `next.config.ts` (`output: "export"`)
+- Workflow: `.github/workflows/deploy-cloudflare.yml`
+- Runtime cible: Cloudflare Workers (OpenNext)
 
-Configurer le repository:
+Secrets GitHub requis:
 
-1. Ouvrir **Settings -> Pages**
-2. Choisir **Source: GitHub Actions**
-3. Push sur `main` (ou `master`) pour déclencher le déploiement
+1. `CLOUDFLARE_API_TOKEN`
+2. `CLOUDFLARE_ACCOUNT_ID`
+
+Secrets Cloudflare Worker requis:
+
+- `MISTRAL_API_KEY` (à définir dans le dashboard Cloudflare ou via `wrangler secret put`)
+
+Chaque push sur `main` ou `master` lance automatiquement lint, build et déploiement.
 
 ## Crédits
 
 ### APIs / services
 
-- Aucune API externe obligatoire en runtime (logique locale/mock)
+- Mistral API (chatbot IA, avec fallback local si clé absente)
 
 ### Modèles / IA
 
