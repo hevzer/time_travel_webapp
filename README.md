@@ -6,6 +6,10 @@ L'application permet de découvrir trois destinations (`Paris 1889`, `Crétacé`
 de dialoguer avec un assistant conversationnel, d'obtenir une recommandation personnalisée via quiz,
 et de simuler une réservation complète.
 
+## Liens
+- Démo en ligne (Cloudflare Workers): https://time-travel-agency.canelat.workers.dev
+- Repo GitHub: https://github.com/hevzer/time_travel_webapp
+
 ## Technologies utilisées
 
 - Next.js 16 (App Router)
@@ -14,6 +18,7 @@ et de simuler une réservation complète.
 - Tailwind CSS v4
 - Framer Motion
 - Bun (latest) (installation et scripts)
+- Cloudflare Workers
 
 ## Fonctionnalités implémentées
 
