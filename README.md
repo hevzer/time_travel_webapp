@@ -15,7 +15,7 @@ et de simuler une réservation complète.
 - Framer Motion
 - Bun (latest) (installation et scripts)
 
-## Features implémentées
+## Fonctionnalités implémentées
 
 - Landing page immersive (animations, storytelling, CTA)
 - Galerie de destinations avec cards interactives
@@ -28,7 +28,7 @@ et de simuler une réservation complète.
 - Page de confirmation de dossier
 - Déploiement dynamique Cloudflare Workers (CI GitHub Actions)
 
-## Outils IA utilisés (transparence)
+## Outils IA utilisés
 
 - Assistance de développement: OpenCode (`gpt-5.3-codex`)
 - Design de référence: MCP Stitch (récupération/alignement visuel)
